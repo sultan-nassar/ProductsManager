@@ -1,0 +1,48 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 text-center">Product Catalog</h1>
+    <p class="text-center">Explore our wide range of products</p>
+
+    <table class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Stock</td>
+                    <td>@product.Category</td>
+                    <td>
+                        <a asp-page="/EditProduct" asp-route-id="@product.Id"><i class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i></a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" class="d-inline">
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i></button>
+                        </form>
+                        <a asp-page="/ProductPage" asp-route-id="@product.Id">View Details</a>
+
+                    </td>
+                </tr>
+             
+            }
+           
+        </tbody>
+    </table>
+
+    <a href="/AddProduct" class="btn btn-primary fixed bottom-right">AddProduct</a>
+</div>

@@ -1,0 +1,48 @@
+﻿@page "{id}"
+@model ProductsManager.Pages.EditProductModel
+@{
+}
+
+
+<h1>Edit Product</h1>
+
+<form method="post">
+    <!-- Use the asp-for attribute to bind the input fields to the model properties -->
+    <div class="form-group">
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" class="form-control" />
+        <span asp-validation-for="Product.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Description"></label>
+        <input asp-for="Product.Description" class="form-control" />
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Price"></label>
+        <input asp-for="Product.Price" class="form-control" />
+        <span asp-validation-for="Product.Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Stock"></label>
+        <input asp-for="Product.Stock" class="form-control" />
+        <span asp-validation-for="Product.Stock" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Category"></label>
+       <select asp-for="Product.Category" class="form-control">
+            <option value="">-- Select Category --</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Home Appliances">Home Appliances</option>
+            <option value="Phones">Phones</option>
+            <!-- Add more options as needed -->
+        </select>       
+        <span asp-validation-for="Product.Category" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin:20px">Update Product</button>
+</form>
