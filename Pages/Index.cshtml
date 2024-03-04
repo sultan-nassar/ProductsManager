@@ -22,7 +22,7 @@
         <tbody>
             @foreach (var product in Model.Products)
             {
-                <tr>
+                <tr class="product-row" data-product-id="@product.Id" style="cursor:pointer">
                     <td>@product.Id</td>
                     <td>@product.Name</td>
                     <td>@product.Description</td>
@@ -34,8 +34,8 @@
                         <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i></button>
                         </form>
-                        <a asp-page="/ProductPage" asp-route-id="@product.Id">View Details</a>
-
+@*                         <a asp-page="/ProductPage" asp-route-id="@product.Id">View Details</a>
+ *@
                     </td>
                 </tr>
              
@@ -45,4 +45,18 @@
     </table>
 
     <a href="/AddProduct" class="btn btn-primary fixed bottom-right">AddProduct</a>
+
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var rows = document.querySelectorAll('.product-row');
+
+        rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+                var productId = this.getAttribute('data-product-id');
+                window.location.href = '/ProductPage/' + productId;
+            });
+        });
+    });
+</script>
