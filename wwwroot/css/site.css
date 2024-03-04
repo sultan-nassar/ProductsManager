@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+
+/* Style the checkbox */
+.cart-checkbox:checked {
+    background-color: green; /* Change to your desired color */
+    border-color: green; /* Change to your desired color */
+}
+
+    /* Style the label text when checkbox is checked */
+    .cart-checkbox:checked + .cart-label {
+        color: green; /* Change to your desired color */
+        font-size: 17px;
+        font-weight:700
+    }

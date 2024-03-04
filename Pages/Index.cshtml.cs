@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MongoDB.Bson;
 using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using ProductsManager.Interfaces;
 using ProductsManager.Models;
 using ProductsManager.Services;
@@ -14,6 +16,9 @@ namespace ProductsManager.Pages
         public List<Product> Products { get; private set; }
         private IProductService _productsDbService;
 
+        [BindProperty]
+        public List<ObjectId> Cart { get; set; }  // Add this property
+
         public IndexModel(IProductService productServiceMongoDb)
         {
             _productsDbService = productServiceMongoDb; //for the initiation of the object in the constructor
@@ -22,8 +27,8 @@ namespace ProductsManager.Pages
         public async Task<IActionResult> OnGet()
         {
             Products = await _productsDbService.GetAll();
+            Cart = HttpContext.Session.Get<List<ObjectId>>("Cart") ?? new List<ObjectId>();  // Initialize Cart
             return Page();
-
         }
 
         public async Task<IActionResult> OnPostDelete(string id)
@@ -57,21 +62,24 @@ namespace ProductsManager.Pages
             HttpContext.Session.Set("Cart", cart);
 
             // Redirect to the same page or another page as needed
-            return RedirectToPage("ShoppingCart");
+            return RedirectToPage("/index");
         }
 
     }
+
+
     public static class SessionExtensions
     {
         public static T Get<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            return value == null ? default : BsonSerializer.Deserialize<T>(value);
         }
 
         public static void Set<T>(this ISession session, string key, T value)
         {
-            session.SetString(key, JsonSerializer.Serialize(value));
+            var jsonString = value.ToJson();
+            session.SetString(key, jsonString);
         }
     }
 }

@@ -30,15 +30,19 @@
                     <td>@product.Stock</td>
                     <td>@product.Category</td>
                     <td>
-                        <a asp-page="/EditProduct" asp-route-id="@product.Id"><i class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i></a>
+                        <a asp-page="/EditProduct" asp-route-id="@product.Id"><i class="fa-solid fa-pen-to-square" style="color: #74C0FC ; margin-right: 12px"></i></a>
                         <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" class="d-inline">
-                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i></button>
+                            <button type="submit" class="btn btn-danger" title="Delete" style="margin-right: 12px"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i>
+
+                </button>
                         </form>
                         <form method="post" asp-page-handler="ShoppingCart" asp-route-id="@product.Id" class="d-inline">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></button>
+                            <button type="submit" class="btn btn-primary" title="Add to Cart" style="margin-right: 12px"><i class="fa-solid fa-cart-shopping"></i></button>
                         </form>
 @*                         <a asp-page="/ShoppingCart"  asp-route-id="@product.Id"><i class="fa-solid fa-cart-shopping" style="color: #74C0FC;"></i></a>
  *@
+                        <input type="checkbox" style="margin-right: 12px" class="cart-checkbox" id="cartCheck-@product.Id" @(Model.Cart.Contains(product.Id) ? "checked" : "") />
+                        <label class="cart-label" for="cartCheck-@product.Id">In Cart</label>
                     </td>
                 </tr>
              
@@ -51,15 +55,3 @@
 
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var rows = document.querySelectorAll('.product-row');
-
-        rows.forEach(function (row) {
-            row.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                window.location.href = '/ProductPage/' + productId;
-            });
-        });
-    });
-</script>
