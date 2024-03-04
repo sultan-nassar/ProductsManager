@@ -20,6 +20,14 @@ namespace ProductsManager
 
             builder.Services.AddScoped<IProductService, ProductServiceMongoDb>(); // or AddSingleton, depending on your needs
 
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            builder.Services.AddDistributedMemoryCache();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,6 +42,7 @@ namespace ProductsManager
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

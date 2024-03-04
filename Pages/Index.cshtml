@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -34,7 +34,10 @@
                         <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" class="d-inline">
                             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i></button>
                         </form>
-@*                         <a asp-page="/ProductPage" asp-route-id="@product.Id">View Details</a>
+                        <form method="post" asp-page-handler="ShoppingCart" asp-route-id="@product.Id" class="d-inline">
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </form>
+@*                         <a asp-page="/ShoppingCart"  asp-route-id="@product.Id"><i class="fa-solid fa-cart-shopping" style="color: #74C0FC;"></i></a>
  *@
                     </td>
                 </tr>

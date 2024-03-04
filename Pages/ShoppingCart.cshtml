@@ -1,0 +1,22 @@
+﻿@page 
+@model ProductsManager.Pages.ShoppingCartModel
+
+<h1>Your Shopping Cart</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <!-- Add other columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var productId in Model.Cart)
+        {
+            <tr>
+                <td>@productId</td>
+                <!-- Add other columns as needed -->
+            </tr>
+        }
+    </tbody>
+</table>

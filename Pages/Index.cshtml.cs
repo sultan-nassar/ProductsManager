@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MongoDB.Bson.IO;
 using ProductsManager.Interfaces;
 using ProductsManager.Models;
 using ProductsManager.Services;
+using System.Text.Json;
 
 namespace ProductsManager.Pages
 {
@@ -32,5 +35,43 @@ namespace ProductsManager.Pages
 
             return RedirectToPage();
         }
-    } 
+
+       public async Task<IActionResult> OnPostShoppingCart(string id)
+        {
+            // Initialize cart
+            var cart = HttpContext.Session.Get<List<string>>("Cart") ?? new List<string>();
+
+            // Check if the product id is already in the cart
+            if (cart.Contains(id))
+            {
+                // If it's in the cart, remove it
+                cart.Remove(id);
+            }
+            else
+            {
+                // If it's not in the cart, add it
+                cart.Add(id);
+            }
+
+            // Update the cart in the session
+            HttpContext.Session.Set("Cart", cart);
+
+            // Redirect to the same page or another page as needed
+            return RedirectToPage("ShoppingCart");
+        }
+
+    }
+    public static class SessionExtensions
+    {
+        public static T Get<T>(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+        }
+
+        public static void Set<T>(this ISession session, string key, T value)
+        {
+            session.SetString(key, JsonSerializer.Serialize(value));
+        }
+    }
 }
