@@ -1,57 +1,54 @@
-﻿@page 
+﻿@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
+<div class="container mt-5">
     <h1 class="display-4 text-center">Product Catalog</h1>
     <p class="text-center">Explore our wide range of products</p>
 
-    <table class="table table-hover mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
-                <tr class="product-row" data-product-id="@product.Id" style="cursor:pointer">
-                    <td>@product.Id</td>
-                    <td>@product.Name</td>
-                    <td>@product.Description</td>
-                    <td>@product.Price.ToString("C")</td>
-                    <td>@product.Stock</td>
-                    <td>@product.Category</td>
-                    <td>
-                        <a asp-page="/EditProduct" asp-route-id="@product.Id"><i class="fa-solid fa-pen-to-square" style="color: #74C0FC ; margin-right: 12px"></i></a>
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id" class="d-inline">
-                            <button type="submit" class="btn btn-danger" title="Delete" style="margin-right: 12px"><i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i>
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <a asp-page="/ProductPage" asp-route-id="@product.Id" class="card-link" style="color:black" />
+                <div class="card" style="background-color: #f5f5f5; cursor: pointer;">
+                    <img src="/Assets/image/electronic.png" class="card-img-top" alt="Product Image">
+                    <div class="card-body" style="color:black">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
+                        <p class="card-text">Price: @product.Price.ToString("C")</p>
+                        <p class="card-text">Stock: @product.Stock</p>
+                        <p class="card-text">Category: @product.Category</p>
 
-                </button>
-                        </form>
-                        <form method="post" asp-page-handler="ShoppingCart" asp-route-id="@product.Id" class="d-inline">
-                            <button type="submit" class="btn btn-primary" title="Add to Cart" style="margin-right: 12px"><i class="fa-solid fa-cart-shopping"></i></button>
-                        </form>
-@*                         <a asp-page="/ShoppingCart"  asp-route-id="@product.Id"><i class="fa-solid fa-cart-shopping" style="color: #74C0FC;"></i></a>
- *@
-                        <input type="checkbox" style="margin-right: 12px" class="cart-checkbox" id="cartCheck-@product.Id" @(Model.Cart.Contains(product.Id) ? "checked" : "") />
-                        <label class="cart-label" for="cartCheck-@product.Id">In Cart</label>
-                    </td>
-                </tr>
-             
-            }
-           
-        </tbody>
-    </table>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-page="/EditProduct" asp-route-id="@product.Id"><i class="fa-solid fa-pen-to-square fa-xl" style="color: #74C0FC; margin-right:20px"></i></a>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@product.Id">
+                                    <button type="submit" class="btn btn-danger" title="Delete" style="margin-right: 18px">
+                                        <i class="fa-solid fa-trash fa-beat" style="color: #ffffff;"></i>
+                                    </button>
+                                </form>
 
-    <a href="/AddProduct" class="btn btn-primary fixed bottom-right">AddProduct</a>
+
+                                <form method="post" asp-page-handler="ShoppingCart" asp-route-id="@product.Id" class="d-inline">
+                                    <button type="submit" id="addToCartBtn-@product.Id" class="btn btn-primary" title="Add to Cart" style="margin-right: 12px"><i class="fa-solid fa-cart-shopping"></i></button>
+                                </form>
+
+                                <input type="checkbox" title="checkbox" class="cart-checkbox" style="margin-right: 12px" id="cartCheck-@product.Id" @(Model.Cart.Contains(product.Id) ? "checked" : "disabled") />
+                                <label class="cart-label" title="InCart" for="cartCheck-@product.Id" id="cartLabel-@product.Id">In Cart</label>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </div>
+    <a href="/AddProduct" class="btn btn-primary fixed-bottom fixed-right m-3">Add Product</a>
 
 </div>
-

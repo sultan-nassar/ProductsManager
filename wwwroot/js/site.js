@@ -17,20 +17,6 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var buttons = document.querySelectorAll('.btn-primary');
 
-        buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                var checkbox = document.getElementById('cartCheck-' + productId);
-                var label = document.querySelector('.cart-label[for="cartCheck-' + productId + '"]');
 
-                if (checkbox && label) {
-                    checkbox.checked = true;
-                    label.classList.add('checked');
-                    
-                }
-            });
-        });
-    });
+

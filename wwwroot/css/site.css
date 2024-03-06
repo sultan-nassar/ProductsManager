@@ -17,21 +17,30 @@ html {
   min-height: 100%;
 }
 
+
 body {
   margin-bottom: 60px;
 }
 
-
-
-/* Style the checkbox */
-.cart-checkbox:checked {
-    background-color: green; /* Change to your desired color */
-    border-color: green; /* Change to your desired color */
+body {
+    background-color: #e6f7f0; /* Set your desired background color */
 }
 
-    /* Style the label text when checkbox is checked */
-    .cart-checkbox:checked + .cart-label {
-        color: green; /* Change to your desired color */
-        font-size: 17px;
-        font-weight:700
-    }
+
+
+/* Default style for the label */
+.cart-label {
+    color: black; /* Set the default color (black in this case) */
+}
+
+/* Style for the label when the checkbox is checked */
+.cart-checkbox:checked + .cart-label {
+    color:seagreen; /* Set the color to green when the checkbox is checked */
+    font-size:17px;
+    font-weight:700;
+}
+
+/* Style for the label when the checkbox is disabled */
+.cart-checkbox:disabled + .cart-label {
+    color: gray; /* Set the color to gray when the checkbox is disabled (optional) */
+}
